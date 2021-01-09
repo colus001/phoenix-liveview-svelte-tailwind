@@ -1,5 +1,9 @@
 # Phovelte
 
+This project is to demonstrate how to setup Phoenix project with liveview, typescript, svelte and tailwind.
+
+---
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
