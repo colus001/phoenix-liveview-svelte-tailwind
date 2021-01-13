@@ -16,32 +16,11 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import NProgress from "nprogress"
 import {LiveSocket} from "phoenix_live_view"
+import hooks from "./hooks"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']")?.getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
-  hooks: {
-    'svelte-component': {
-      mounted(this: {el: HTMLElement}) {
-        const componentName = this.el.getAttribute('data-name');
-        if (!componentName) {
-          throw new Error('Component name must be provided');
-        }
-
-        const requiredApp = require(`./${componentName}.svelte`);
-        if (!requiredApp) {
-          throw new Error(`Unable to find ${componentName} component`);
-        }
-
-        const props = this.el.getAttribute('data-props');
-        const parsedProps = props ? JSON.parse(props) : {};
-
-        new requiredApp.default({
-          target: this.el,
-          props: parsedProps,
-        });
-      },
-    },
-  },
+  hooks,
   params: {
     _csrf_token: csrfToken,
   },
